@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="ppt-imagegrid-container">
+        <div class='table'>
+            <transition-group name="list" tag="div">
+                <ul class='row' v-for="(row, index) in rows" v-bind:key="row">
+                    <transition-group name="cells" tag="div">
+                    <li class='cell' v-bind:key='cell' v-for="(cell, cellIndex) in row">
+                        <div class='radio-list'>
+                            <input v-model='cell.currentValue' v-bind:name='index + "-" + cellIndex' class='specific-letter' data-stepper='a' value='specificLetter' type="radio" checked>
+                            <input v-model='cell.currentValue' v-bind:name='index + "-" + cellIndex' class='random-letter' data-stepper='a' value='randomLetter' type="radio">
+                            <input v-model='cell.currentValue' v-bind:name='index + "-" + cellIndex' class='random' data-stepper='a' value='random' type="radio">
+                        </div>
+                        <div class="cell-input">
+                            <button class='btn' v-if="cell.currentValue === 'specificLetter'" id="">Pick Letter</button>
+                            <input required maxlength='1' v-if="cell.currentValue === 'randomLetter' " type="text" name="" class='random-letter-input' id="">
+                        </div>
+                    </li>
+                    <li key='row-action' class='row-action cell'>
+                        <button v-on:click="removeRow(index)" class='remove-row icon-btn' id="removeRow">Remove Row</button>
+                    </li>
+                    </transition-group>
+                </ul>
+                <ul class="row table-actions" key='actions'>
+                    <button class='btn' id="addRow">Add Row</button>
+                    <button class='btn' id="addCol">Add Column</button>
+                    <button class='btn' id="removeCol">Remove Column</button>
+                </ul>
+            </transition-group>
+    
+        </div>
+    </div>
+    <script src="./main.js"></script>
+    <script src="//localhost:3001/livereload.js"></script>
+</body>
+</html>

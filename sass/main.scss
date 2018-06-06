@@ -1,0 +1,140 @@
+$fast: 300ms;
+
+#ppt-imagegrid-container{
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+.row {
+	border-bottom: 1px solid lightgray;
+	transition: transform $fast, opacity $fast * .7;
+	transform-origin: top center;
+	div { //transition group		
+		width: 100%;
+		display: flex;
+	}
+}
+
+.row-action {
+	padding-top: 1rem;
+	padding-left: 1rem;
+	border-right: 0 !important;
+}
+
+.table-actions {
+	border: none;
+	padding: 1rem;
+}
+
+.radio-list {
+	margin-bottom: .2rem;
+	input{
+		-webkit-appearance: none;
+		border-right: 1px solid lightgray;
+		border-top: 1px solid lightgray;
+		border-bottom: 1px solid lightgray;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 0;
+		margin-right: -2px;
+		background-repeat: no-repeat;
+		background-position: center;
+		box-shadow: none !important;
+		&:checked {
+			background-color: lighten(lightgray, 5);
+			box-shadow: none !important;
+			&:before {
+				display: none;
+			}
+		}
+	}
+	.specific-letter {
+		border-left: 1px solid lightgray;
+		background-image: url('../images/format-color-text.svg')
+	}
+	.random-letter {
+		background-image: url('../images/format-font.svg')
+	}
+	.random {
+		background-image: url('../images/shuffle.svg');
+		background-size: 70%;
+	}
+}
+
+.random-letter-input {
+	font-size: 3rem;
+	border: 0;
+	font-family: monospace;
+	border-bottom: 1px solid gray;
+	width: 2rem;
+	text-align: center;
+	font-weight: bold;
+	&:focus {
+		outline: 0;
+		border-bottom-color: black;
+	}
+}
+
+.btn {
+	appearance: none;
+	border: 1px solid lightgray;
+	border-radius: 2px;
+	background: white;
+	padding: .5rem;
+	margin-right: .5rem;
+}
+
+.icon-btn {
+	appearance: none;
+	border: none;
+	display: block;
+	font-size: 0;
+	height: 1.4rem;
+	width: 1.4rem;
+	background-size: contain;
+	background-color: transparent;
+	&:hover, &:focus {
+		opacity: .7;
+	}
+}
+
+.remove-row {
+	background-image: url('../images/close-circle.svg');
+}
+
+.cell {
+	padding: 1rem;
+	border-right: 1px solid lightgray;
+	transition: $fast;
+}
+
+.cells-leave-to {
+	opacity: 0; 
+}
+
+.cells-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.cells-leave-active {
+  position: absolute;
+  left: 0;
+}
+
+.list-leave-to {
+	opacity: 0; 
+	transform: scaleY(0);
+}
+
+.list-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.list-leave-active {
+  position: absolute;
+}
+}
