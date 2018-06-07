@@ -139,8 +139,8 @@ class max_acf_field_ppt_imagegrid extends acf_field {
 		*  This will show what data is available
 		*/
 		
-		echo '<pre>';
-			print_r( $field );
+/*		echo '<pre>';
+/*			print_r( $field );
 		echo '</pre>';
 		
 		
@@ -154,20 +154,22 @@ class max_acf_field_ppt_imagegrid extends acf_field {
 		<div id="ppt-imagegrid-container">
         <div class='table'>
             <transition-group name="list" tag="div">
-                <ul class='row' v-for="(row, index) in rows" v-bind:key="row">
+                <ul class='row' v-for="(row, index) in rows" v-bind:key="'row' + index">
                     <transition-group name="cells" tag="div">
-                    <li class='cell' v-bind:key='cell' v-for="(cell, cellIndex) in row">
+                    <li class='cell' v-bind:key='"cell" + index + cellIndex' v-for="(cell, cellIndex) in row">
                         <div class='radio-list'>
                             <input v-model='cell.currentMode' v-on:change='updateJSON' v-bind:name='index + "-" + cellIndex' class='specific-letter' data-stepper='a' value='specificLetter' type="radio" checked>
                             <input v-model='cell.currentMode' v-on:change='updateJSON' v-bind:name='index + "-" + cellIndex' class='random-letter' data-stepper='a' value='randomLetter' type="radio">
                             <input v-model='cell.currentMode' checked v-on:change='updateJSON' v-bind:name='index + "-" + cellIndex' class='random' data-stepper='a' value='random' type="radio">
                         </div>
                         <div class="cell-input">
+						
                             <a href='#1' class='btn' v-on:click='launchUploader(cell, $event)' v-if="cell.currentMode === 'specificLetter'" id="">Pick Letter</a>
-                            <input required maxlength='1' v-if="cell.currentMode === 'randomLetter' " type="text" name="" class='random-letter-input' id="">
+                            <img v-if="cell.currentMode === 'specificLetter'" v-bind:src='cell.previewImage' class='specific-letter-preview'/>
+                            <input required maxlength='1' v-on:keyup='updateJSON' v-if="cell.currentMode === 'randomLetter' " type="text" name="" v-model='cell.currentValue' class='random-letter-input' id="">
                         </div>
                     </li>
-                    <li key='row-action' class='row-action cell'>
+                    <li key='index + "row-action"' class='row-action cell'>
                         <a href='#1' v-on:click="removeRow(index)" class='remove-row icon-btn' id="removeRow">Remove Row</a>
                     </li>
                     </transition-group>
@@ -180,6 +182,7 @@ class max_acf_field_ppt_imagegrid extends acf_field {
             </transition-group>
     
 		</div>
+		<input id='valueFromDatabase' type="text" value="<?php echo esc_attr($field['value']) ?>" />
 		<input type="text" name="<?php echo esc_attr($field['name']) ?>" v-model="JSONData" />
 
     </div>

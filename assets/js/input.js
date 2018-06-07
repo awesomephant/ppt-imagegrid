@@ -13,7 +13,13 @@
 	*/
 
 	function initialize_field($field) {
-		console.log($field)
+		let databaseData;
+		let databaseString = document.querySelector('#valueFromDatabase').getAttribute('value')
+		if (databaseString){
+			databaseData = JSON.parse(databaseString)
+		} else {
+			databaseData = [[]]
+		}
 		const Cell = function(){
 			this.currentMode = 'random';
 			this.currentValue = '';
@@ -26,7 +32,6 @@
 				newRow.push(new Cell())
 			}
 			app.rows.push(newRow)
-			updateJSON()
 		};
 		const addCol = function(){
 			for (let i = 0; i < app.rows.length; i++){
@@ -34,7 +39,6 @@
 				r.push(new Cell())
 			}
 			app.colCount++;
-			updateJSON()
 		};
 		const updateJSON = function(){
 			app.JSONData = JSON.stringify(app.rows)
@@ -45,20 +49,19 @@
 				r.splice(-1,1)
 			}
 			app.colCount--;
-			updateJSON()
 		};
-		//$field.doStuff();
-		console.log('hi')
 		var app = new Vue({
 			el: namespace,
 			data: {
-				colCount: 1,
+				colCount: databaseData[0].length,
 				JSONData: '',
-				rows: [
-					[new Cell],
-					[new Cell],
-					[new Cell],
-				]
+				rows: databaseData
+			},
+			watch: {
+				rows() {
+					console.log('asd')
+				  updateJSON();
+				}
 			},
 			methods: {
 				updateJSON: function(){
@@ -66,7 +69,6 @@
 				},
 				removeRow: function (index) {
 					this.rows.splice(index, 1)
-					updateJSON()
 				},
 				setCellStatus: function () {
 				},
@@ -75,9 +77,9 @@
 					var button = event.srcElement;
 					wp.media.editor.open(button);
 					wp.media.editor.send.attachment = function(props, attachment) {
-						console.log(attachment)
+						cell.previewImage = attachment.sizes.thumbnail.url;
 						cell.currentValue = attachment.uploadedTo;
-						updateJSON()
+						updateJSON();
 						// The media dialogue is great, but it only lets is pick media objects.
 						// What we want is a Letter (a post object)
 						// We can work around this by reading the uploadedTo variable,
